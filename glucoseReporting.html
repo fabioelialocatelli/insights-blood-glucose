@@ -1,24 +1,36 @@
 <html>
 	<head>
-		<title>Glucose Reporting @ 22/01/2021 14:58:45</title>
+		<title>Glucose Reporting @ 22/01/2021 17:07:24</title>
 		<style>
-			* {color: #523547}
-			* {font-family: Abadi, Futura, Arial, Helvetica}
-			body {background-color: #FF9966}
-			table {border-collapse: collapse}
-			td, th {padding: 3px}
-			div, table, td, th {border: 1px solid #5E7BBD}
-			div, table {border-radius: 6px}
-			div, table {padding: 6px}
-			div, table {margin: 9px}
+			* {color: #523547;}
+			* {font-family: Abadi, Futura, Arial, Helvetica;}
+			body {background-color: #FF9966;}
+			th, td {padding: 3px;}
+			div, td, th {border: 1px solid #5E7BBD;}
+			div {border-radius: 6px;}
+			div {padding: 6px;}
+			div, table {margin: 9px;}
+			.roundTable thead th:first-child {border-radius: 6px 0 0 0;}
+			.roundTable thead th:last-child {border-radius: 0 6px 0 0;}
+			.roundTable tbody tr:last-child td:first-child {border-radius: 0 0 0 6px;}
+			.roundTable tbody tr:last-child td:last-child {border-radius: 0 0 6px 0;}
 		</style>
 	</head>
 	<body>
 		<div>
-			<p>Report generated at 22/01/2021 14:58:45</p>
+			<p>Report generated at 22/01/2021 17:07:24</p>
 		</div>
-		<table>
-			<tr><th>Recording Date</th><th>Average</th><th>90th Percentile</th><th>75th Percentile</th><th>50th Percentile</th></tr>
+		<table class="roundTable">
+		<thead>
+			<tr>
+				<th>Recording Date</th>
+				<th>Average</th>
+				<th>90th Percentile</th>
+				<th>75th Percentile</th>
+				<th>50th Percentile</th>
+			</tr>
+		</thead>
+		<tbody>
 			<tr><td>30/12/2020</td><td>5.58</td><td>7.10</td><td>5.55</td><td>5.05</td></tr>
 			<tr><td>31/12/2020</td><td>5.07</td><td>6.20</td><td>5.05</td><td>4.75</td></tr>
 			<tr><td>01/01/2021</td><td>4.58</td><td>5.00</td><td>4.55</td><td>4.40</td></tr>
@@ -42,11 +54,13 @@
 			<tr><td>19/01/2021</td><td>5.43</td><td>6.15</td><td>5.85</td><td>5.50</td></tr>
 			<tr><td>20/01/2021</td><td>5.38</td><td>6.15</td><td>5.92</td><td>5.35</td></tr>
 			<tr><td>21/01/2021</td><td>4.97</td><td>5.70</td><td>5.55</td><td>4.90</td></tr>
+		</tbody>
 		</table>
 		<div>
 			<p>The final score is 82/100; there were 4 bad records out of 23</p>
 		</div>
 		<div>
-<p>© 2020 Seagull Holdings. All Rights Reserved.</p>		</div>
+			<p>© 2020 Seagull Holdings. All Rights Reserved.</p>
+		</div>
 	</body>
 	</html>
