@@ -1,7 +1,6 @@
-import glucoseFormatter
-
 import numpy as numericLibrary
 import pandas as spreadsheetLibrary
+import scipy.stats as scientificLibrary
 
 from datetime import datetime
 from glucoseFormatter import formatter
@@ -12,6 +11,7 @@ recordingAverage = 0
 recordingPercentile90 = 0
 recordingPercentile75 = 0
 recordingPercentile50 = 0
+recordingKurtosis = 0
 
 controlledGlucose = False
 
@@ -42,51 +42,55 @@ reportingFile.write(f'<style>')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'* {{color: #523547;}}')
+reportingFile.write(f'* {{color: #523547}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'* {{font-family: Abadi, Futura, Arial, Helvetica;}}')
+reportingFile.write(f'* {{font-family: Abadi, Futura, Arial, Helvetica}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'body {{background-color: #FF9966;}}')
+reportingFile.write(f'body {{background-color: #B2BEB5}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'th, td {{padding: 3px;}}')
+reportingFile.write(f'div {{border-radius: 6px}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'div, td, th {{border: 1px solid #5E7BBD;}}')
+reportingFile.write(f'div {{padding: 6px}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'div {{border-radius: 6px;}}')
+reportingFile.write(f'div, table {{margin: 9px}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'div {{padding: 6px;}}')
+reportingFile.write(f'div, td, th {{border: 1px solid #5E7BBD}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'div, table {{margin: 9px;}}')
+reportingFile.write(f'th, td {{padding: 3px}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'.roundTable thead th:first-child {{border-radius: 6px 0 0 0;}}')
+reportingFile.write(f'th, td {{width: 125px}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'.roundTable thead th:last-child {{border-radius: 0 6px 0 0;}}')
+reportingFile.write(f'.roundTable thead th:first-child {{border-radius: 6px 0 0 0}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'.roundTable tbody tr:last-child td:first-child {{border-radius: 0 0 0 6px;}}')
+reportingFile.write(f'.roundTable thead th:last-child {{border-radius: 0 6px 0 0}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.tripleIndentation())
-reportingFile.write(f'.roundTable tbody tr:last-child td:last-child {{border-radius: 0 0 6px 0;}}')
+reportingFile.write(f'.roundTable tbody tr:last-child td:first-child {{border-radius: 0 0 0 6px}}')
+reportingFile.write(formatter.newLine())
+
+reportingFile.write(formatter.tripleIndentation())
+reportingFile.write(f'.roundTable tbody tr:last-child td:last-child {{border-radius: 0 0 6px 0}}')
 reportingFile.write(formatter.newLine())
 
 reportingFile.write(formatter.doubleIndentation())
@@ -145,6 +149,10 @@ reportingFile.write(formatter.quadrupleIndentation())
 reportingFile.write(f'<th>50th Percentile</th>')
 reportingFile.write(formatter.newLine())
 
+reportingFile.write(formatter.quadrupleIndentation())
+reportingFile.write(f'<th>Kurtosis</th>')
+reportingFile.write(formatter.newLine())
+
 reportingFile.write(formatter.tripleIndentation())
 reportingFile.write(f'</tr>')
 reportingFile.write(formatter.newLine())
@@ -165,14 +173,15 @@ for individualRecord in spreadsheetRecords:
     recordingAverage = numericLibrary.mean(individualRecord)
     recordingPercentile90 = numericLibrary.percentile(individualRecord, 90)
     recordingPercentile75 = numericLibrary.percentile(individualRecord, 75)
-    recordingPercentile50 = numericLibrary.percentile(individualRecord, 50)  
+    recordingPercentile50 = numericLibrary.percentile(individualRecord, 50) 
+    recordingKurtosis = scientificLibrary.kurtosis(individualRecord)
 
-    if recordingPercentile90 >= 7.0:
+    if recordingPercentile90 >= 7.0 or recordingKurtosis >= 3.0:
         uncontrolledRecords.append(individualRecord)
 
         reportingFile.write(formatter.tripleIndentation())
         reportingFile.write(f'<tr>')        
-        reportingFile.write(f'<td>{recordingDate}</td><td>{recordingAverage:.2f}</td><td>{recordingPercentile90:.2f}</td><td>{recordingPercentile75:.2f}</td><td>{recordingPercentile50:.2f}</td>')
+        reportingFile.write(f'<td>{recordingDate}</td><td>{recordingAverage:.2f}</td><td>{recordingPercentile90:.2f}</td><td>{recordingPercentile75:.2f}</td><td>{recordingPercentile50:.2f}</td><td>{recordingKurtosis:.2f}</td>')
         reportingFile.write(f'</tr>')
         reportingFile.write(formatter.newLine())
 
@@ -182,7 +191,7 @@ for individualRecord in spreadsheetRecords:
 
         reportingFile.write(formatter.tripleIndentation())
         reportingFile.write(f'<tr>')
-        reportingFile.write(f'<td>{recordingDate}</td><td>{recordingAverage:.2f}</td><td>{recordingPercentile90:.2f}</td><td>{recordingPercentile75:.2f}</td><td>{recordingPercentile50:.2f}</td>')
+        reportingFile.write(f'<td>{recordingDate}</td><td>{recordingAverage:.2f}</td><td>{recordingPercentile90:.2f}</td><td>{recordingPercentile75:.2f}</td><td>{recordingPercentile50:.2f}</td><td>{recordingKurtosis:.2f}</td>')
         reportingFile.write(f'</tr>')
         reportingFile.write(formatter.newLine())
 
