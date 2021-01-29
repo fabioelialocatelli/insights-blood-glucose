@@ -14,3 +14,6 @@ class formatter:
 
     def quadrupleIndentation():
         return '\t\t\t\t'
+
+    def quintupleIndentation():
+        return '\t\t\t\t\t'
